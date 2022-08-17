@@ -1,3 +1,5 @@
+import json
+
 from block import Block
 
 
@@ -25,7 +27,24 @@ class Blockchain:
         newBlock.previousHash = self.getLatestBlock().hash
         newBlock.hash = newBlock.calculateHash()
 
-        print(
-            f"New block ({newBlock.data}) with hash: {newBlock.hash} created")
+        # Debug output
+        print("**New block created**")
+        print(newBlock.hash)
+        print(str(newBlock) + '\n')
 
         self.chain.append(newBlock)
+
+    def __str__(self):
+        """Return blockchain in a human readable string"""
+        jData = []
+
+        for b in self.chain:
+            block = {
+                "Index": b.index,
+                "Hash": b.hash,
+                "Previous hash": b.previousHash
+            }
+
+            jData.append(block)
+
+        return json.dumps(jData, indent=4)
