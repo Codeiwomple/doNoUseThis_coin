@@ -1,6 +1,11 @@
 import json
+import logging
 
+from setup_logger import logger
 from block import Block
+
+# Set logger to name of class
+logger = logging.getLogger('Blockchain')
 
 
 class Blockchain:
@@ -14,7 +19,9 @@ class Blockchain:
         """Create genesis/ first block on chain"""
 
         self.genBlock = Block(0, "01/01/2017", "Genesis block", "0")
-        print("Genisis block created")
+
+        logger.info("Genisis block created")
+        logger.info("An info message")
 
         return self.genBlock
 
@@ -28,14 +35,14 @@ class Blockchain:
         newBlock.hash = newBlock.calculateHash()
 
         # Debug output
-        print("**New block created**")
-        print(newBlock.hash)
-        print(str(newBlock) + '\n')
+        logger.info("New block created")
+        logger.debug(newBlock.hash)
+        logger.debug(str(newBlock))
 
         self.chain.append(newBlock)
 
     def __str__(self):
-        """Return blockchain in a human readable string"""
+        """Return blockchain in a human readable (json) string"""
         jData = []
 
         for b in self.chain:

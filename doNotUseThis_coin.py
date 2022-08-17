@@ -1,7 +1,12 @@
 import json
+import logging
 
+from setup_logger import logger
 from blockchain import Blockchain
 from block import Block
+
+# Set logger to name of class
+logger = logging.getLogger('DoNotUseThis_coin')
 
 
 class DoNotUseThis_coin:
@@ -28,9 +33,6 @@ class DoNotUseThis_coin:
             ]
         }
 
-        # print(data)
-        # print(json.dumps(data, indent=4))
-
         self.myBlockchain.addBlock(Block(1, "10/07/2017", data))
 
         data = {
@@ -49,7 +51,6 @@ class DoNotUseThis_coin:
         }
         self.myBlockchain.addBlock(Block(2, "12/07/2017", data))
 
-        print()
         print(str(self.myBlockchain))
 
 
