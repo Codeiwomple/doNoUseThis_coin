@@ -9,17 +9,9 @@ from block import Block
 logger = logging.getLogger('DoNotUseThis_coin')
 
 
-class DoNotUseThis_coin:
-    """Class to """
-
-    def __init__(self):
-        """"""
-        # Create a blockchain
-        self.blockchain = Blockchain()
-
-
-if __name__ == '__main__':
-    myCoin = DoNotUseThis_coin()
+def Main():
+    # Create new blockchain
+    myCoin = Blockchain()
 
     # Add some blocks
     data = {
@@ -61,3 +53,7 @@ if __name__ == '__main__':
 
     myCoin.blockchain.blockchain[2].data = "Hello"
     print(f"The chain is valid {myCoin.blockchain.isValid()}")
+
+
+if __name__ == "__main__":
+    Main()
