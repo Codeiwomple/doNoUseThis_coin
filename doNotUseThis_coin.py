@@ -15,44 +15,49 @@ class DoNotUseThis_coin:
     def __init__(self):
         """"""
         # Create a blockchain
-        self.myBlockchain = Blockchain()
-
-        # Add some blocks
-        data = {
-            "Transactions": [
-                {
-                    "To": "John",
-                    "From": "Ben",
-                    "Ammount": 100
-                },
-                {
-                    "To": "Jodie",
-                    "From": "Ben",
-                    "Ammount": 20
-                }
-            ]
-        }
-
-        self.myBlockchain.addBlock(Block(1, "10/07/2017", data))
-
-        data = {
-            "Transactions": [
-                {
-                    "To": "Conor",
-                    "From": "Ben",
-                    "Ammount": 1000
-                },
-                {
-                    "To": "Jodie",
-                    "From": "James",
-                    "Ammount": 200
-                }
-            ]
-        }
-        self.myBlockchain.addBlock(Block(2, "12/07/2017", data))
-
-        print(str(self.myBlockchain))
+        self.blockchain = Blockchain()
 
 
 if __name__ == '__main__':
     myCoin = DoNotUseThis_coin()
+
+    # Add some blocks
+    data = {
+        "Transactions": [
+            {
+                "To": "John",
+                "From": "Ben",
+                "Ammount": 100
+            },
+            {
+                "To": "Jodie",
+                "From": "Ben",
+                "Ammount": 20
+            }
+        ]
+    }
+
+    myCoin.blockchain.addBlock(Block(1, "10/07/2017", data))
+
+    data = {
+        "Transactions": [
+            {
+                "To": "Conor",
+                "From": "Ben",
+                "Ammount": 1000
+            },
+            {
+                "To": "Jodie",
+                "From": "James",
+                "Ammount": 200
+            }
+        ]
+    }
+    myCoin.blockchain.addBlock(Block(2, "12/07/2017", data))
+
+    print(str(myCoin.blockchain))
+
+    print(f"The chain is valid {myCoin.blockchain.isValid()}")
+
+    myCoin.blockchain.blockchain[2].data = "Hello"
+    print(f"The chain is valid {myCoin.blockchain.isValid()}")

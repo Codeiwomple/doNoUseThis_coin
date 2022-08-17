@@ -1,5 +1,17 @@
 import logging
 import sys
 
-logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
+"""
+A class to set up logging functionality for doNotUseThis_coin
+
+Logging levels:
+CRITICAL
+ERROR
+WARNING
+INFO
+DEBUG
+NOTSET
+"""
+
+logging.basicConfig(stream=sys.stderr, level=logging.INFO)
 logger = logging.getLogger('log')
