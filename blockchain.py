@@ -1,5 +1,6 @@
 import json
 import logging
+import difflib
 
 from setup_logger import logger
 from block import Block
@@ -14,6 +15,7 @@ class Blockchain:
     def __init__(self):
         """Create a chain containing a genesis block"""
         self.blockchain = [self._createGenesisBlock()]
+        self.difficulty = 4
 
     def _createGenesisBlock(self):
         """Create genesis/ first block on chain"""
@@ -29,12 +31,13 @@ class Blockchain:
         return self.blockchain[len(self.blockchain) - 1]
 
     def addBlock(self, newBlock):
-        """Push a new block to the blockchain"""
+        """Mine new block and push to the blockchain"""
+        print("Call mine")
         newBlock.previousHash = self.getLatestBlock().hash
-        newBlock.hash = newBlock.calculateHash()
+        newBlock.mineBlock(self.difficulty)
 
         # Logging
-        logger.info(f"New block created: {newBlock.hash}")
+        logger.info(f"New block created: {newBlock.index} {newBlock.hash}")
         logger.debug(str(newBlock))
 
         self.blockchain.append(newBlock)
@@ -63,8 +66,18 @@ class Blockchain:
 
             # Check block hashs matche recorded values
             if(currBlock.hash != currBlock.calculateHash()):
+                logger.warning(
+                    f"currBlock {currBlock.index} hash's do not match!")
+                logger.warning(f"Recorded hash: {currBlock.hash}")
+                logger.warning(f"Actual hash: {currBlock.calculateHash()}")
+
                 return False
+
             if(prevBlock.hash != prevBlock.calculateHash()):
+                logger.warning(
+                    f"prevBlock {prevBlock.index} hash's do not match!")
+                logger.warning(f"Recorded hash: {prevBlock.hash}")
+                logger.warning(f"Actual hash: {prevBlock.calculateHash()}")
                 return False
 
         return True

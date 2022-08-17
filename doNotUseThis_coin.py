@@ -29,6 +29,7 @@ def Main():
         ]
     }
 
+    print("Add new block 1")
     myCoin.addBlock(Block(1, "10/07/2017", data))
 
     data = {
@@ -45,6 +46,7 @@ def Main():
             }
         ]
     }
+    print("Add new block 1")
     myCoin.addBlock(Block(2, "12/07/2017", data))
 
     print(str(myCoin))
