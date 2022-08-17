@@ -29,7 +29,7 @@ def Main():
         ]
     }
 
-    myCoin.blockchain.addBlock(Block(1, "10/07/2017", data))
+    myCoin.addBlock(Block(1, "10/07/2017", data))
 
     data = {
         "Transactions": [
@@ -45,14 +45,14 @@ def Main():
             }
         ]
     }
-    myCoin.blockchain.addBlock(Block(2, "12/07/2017", data))
+    myCoin.addBlock(Block(2, "12/07/2017", data))
 
-    print(str(myCoin.blockchain))
+    print(str(myCoin))
 
-    print(f"The chain is valid {myCoin.blockchain.isValid()}")
+    print(f"The chain is valid {myCoin.isValid()}")
 
-    myCoin.blockchain.blockchain[2].data = "Hello"
-    print(f"The chain is valid {myCoin.blockchain.isValid()}")
+    myCoin.blockchain[2].data = "Hello"
+    print(f"The chain is valid {myCoin.isValid()}")
 
 
 if __name__ == "__main__":
