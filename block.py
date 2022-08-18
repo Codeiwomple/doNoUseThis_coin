@@ -19,6 +19,18 @@ class Block:
 
         self.hash = self.calculateHash()
 
+    def __str__(self):
+        """Return a block in a human readable string, in this case JSON"""
+        block = {
+            "Timestamp": self.timestamp,
+            "Hash": self.hash,
+            "Previous hash": self.previousHash,
+            "Nonce": self.nonce,
+            "Transactions": [str(tx) for tx in self.transactions]
+        }
+
+        return json.dumps(block, indent=4)
+
     def calculateHash(self):
         """Create a hash of current block instance"""
 
@@ -42,14 +54,10 @@ class Block:
         logger.info(f"New block mined {self.timestamp} {self.hash}")
         logger.debug(str(self))
 
-    def __str__(self):
-        """Return a block in a human readable string, in this case JSON"""
-        block = {
-            "Timestamp": self.timestamp,
-            "Hash": self.hash,
-            "Previous hash": self.previousHash,
-            "Nonce": self.nonce,
-            "Transactions": [str(tx) for tx in self.transactions]
-        }
+    def transactionsAreValid(self):
+        """Check all transactions in block and validate"""
 
-        return json.dumps(block, indent=4)
+        for tx in this.transactions:
+            if not tx.isValid():
+                return False
+        return True

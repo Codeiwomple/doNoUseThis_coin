@@ -67,10 +67,19 @@ class Blockchain:
         logger.debug(f"Pending TX cleared")
         logger.debug(f"Mining reward added for {miningRewardAddr}")
 
-    def createTransaction(self, transaction):
+    def addTransaction(self, transaction):
         """Add a transaction to the pending transaction list"""
+
+        # Check tx contains to and from addresses
+        if not transaction.fromAddr or not transaction.toAddr:
+            raise Exception("Transactions must have a from and to address")
+
+        # Check the trasaction is valid
+        if not transaction.isValid():
+            raise Exception("Transactions is invalid")
+
         self.pendingTransactions.append(transaction)
-        logger.debug(f"Trasaction created {str(transaction)}")
+        logger.debug(f"Trasaction added {str(transaction)}")
 
     def getBalance(self, addr):
         """Calculates and returns balance of given address"""
@@ -106,10 +115,16 @@ class Blockchain:
             currBlock = self.blockchain[i]
             prevBlock = self.blockchain[i-1]
 
+            # Check all transactions are valid
+            if not currBlock.transactionsAreValid():
+                logger.warning(
+                    f"Invalid transactions found on {str(currBlock)}")
+                return False
+
             # Check block hashs match recorded values
             if(currBlock.hash != currBlock.calculateHash()):
                 logger.warning(
-                    f"Block {currBlock.index} hash's do not match!")
+                    f"Current block hash's do not match!")
                 logger.warning(f"Recorded hash: {currBlock.hash}")
                 logger.warning(f"Actual hash: {currBlock.calculateHash()}")
 
@@ -117,7 +132,7 @@ class Blockchain:
 
             if(prevBlock.hash != prevBlock.calculateHash()):
                 logger.warning(
-                    f"Previous block {prevBlock.index} hash's do not match!")
+                    f"Previous block hash's do not match!")
                 logger.warning(f"Recorded hash: {prevBlock.hash}")
                 logger.warning(f"Actual hash: {prevBlock.calculateHash()}")
                 return False
