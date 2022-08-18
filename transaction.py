@@ -25,6 +25,10 @@ class Transaction:
 
     def __str__(self):
         """Output transaction in human readable format"""
+        return f"Ammount: {self.ammount} From: {self.fromAddr} To: {self.toAddr}"
+
+    def toJson(self):
+        """Output transaction in human readable JSON format"""
         tx = {
             "From": self.fromAddr,
             "To": self.toAddr,
@@ -38,18 +42,18 @@ class Transaction:
         digest = hashes.Hash(hashes.SHA256())
         digest.update(bytes(str(self), 'utf-8'))
 
-        return digest.finalize().hex()
+        return digest.finalize()
 
     def signTransaction(self, signingKey):
         """Digitally sign transaction"""
 
         # Verify that the from address is the public signing key
         # i.e. the person sending is the person signing
-        if signingKey.public_bytes(encoding=serialization.Encoding.PEM, format=serialization.PublicFormat.SubjectPublicKeyInfo) != self.fromAddr:
+        if signingKey.public_key().public_bytes(encoding=serialization.Encoding.PEM, format=serialization.PublicFormat.SubjectPublicKeyInfo) != self.fromAddr:
             raise Exception("You cannot sign transactions for other people")
 
         txHash = self.calculateHash()
-        logging.debug(f"{self.fromAddr} attmptng to sign {txHash}")
+        logging.debug(f"{self.fromAddr.decode()} attmptng to sign {txHash}")
 
         # Sign the hash
         self.signature = signingKey.sign(txHash, ec.ECDSA(hashes.SHA256()))

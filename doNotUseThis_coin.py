@@ -44,7 +44,7 @@ def Main():
 
     # Mine the block
     print("**MINE THE BLOCK**")
-    myCoin.minePendingTransactions(myAddr))
+    myCoin.minePendingTransactions(myAddr)
 
     # Retrieve balance
     print("**GET MY BALANCE**")
