@@ -4,6 +4,7 @@ import logging
 from setup_logger import logger
 from blockchain import Blockchain
 from block import Block
+from transaction import Transaction
 
 # Set logger to name of class
 logger = logging.getLogger('DoNotUseThis_coin')
@@ -13,6 +14,38 @@ def Main():
     # Create new blockchain
     myCoin = Blockchain()
 
+    # Create some transactions
+    print("**CREATE TRANSACTIONS**")
+    myCoin.createTransaction(Transaction("Ben", "John", 100))
+    myCoin.createTransaction(Transaction("Jodie", "Ben", 20))
+
+    # Mine the block
+    print("**MINE THE BLOCK**")
+    myCoin.minePendingTransactions("Conor")
+
+    # Retrieve balance
+    print("**GET MY BALANCE**")
+    print(myCoin.getBalance("Conor"))
+
+    # Create some more transactions
+    print("**CREATE TRANSACTIONS**")
+    myCoin.createTransaction(Transaction("Ben", "Conor", 1000))
+    myCoin.createTransaction(Transaction("James", "Jodie", 200))
+
+    # Mine the block
+    print("**MINE THE BLOCK**")
+    myCoin.minePendingTransactions("Conor")
+
+    # Retrieve balance
+    print("**GET MY BALANCE**")
+    print(myCoin.getBalance("Conor"))
+
+
+if __name__ == "__main__":
+    Main()
+
+
+"""
     # Add some blocks
     data = {
         "Transactions": [
@@ -57,7 +90,4 @@ def Main():
     myCoin.blockchain[2].data = "Hello"
 
     print(f"The chain is valid {myCoin.isValid()}")
-
-
-if __name__ == "__main__":
-    Main()
+"""

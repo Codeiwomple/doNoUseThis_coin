@@ -22,7 +22,7 @@ class Block:
     def calculateHash(self):
         """Create a hash of current block instance"""
 
-        hashData = f"{self.timestamp}{json.dumps(self.transactions)}{self.previousHash}{self.nonce}"
+        hashData = f"{self.timestamp}{self.transactions}{self.previousHash}{self.nonce}"
 
         hashGen = hashlib.sha256()
         hashGen.update(hashData.encode())
@@ -31,7 +31,7 @@ class Block:
 
     def mineBlock(self, difficulty):
         """Function to mine a block using proof of work"""
-        logger.debug(f"Mining difficulty {difficulty}")
+        logger.debug(f"Mining... difficulty {difficulty}")
 
         while(self.hash[0:difficulty] != '0' * difficulty):
             self.nonce += 1
@@ -39,17 +39,17 @@ class Block:
             # print(self.hash, self.nonce)
             # time.sleep(0.5)
 
-        logger.info("New block mined")
-        logger.debug(f"Nonce: {self.nonce}")
+        logger.info(f"New block mined {self.timestamp} {self.hash}")
+        logger.debug(str(self))
 
     def __str__(self):
         """Return a block in a human readable string, in this case JSON"""
-        b = {
+        block = {
             "Timestamp": self.timestamp,
             "Hash": self.hash,
             "Previous hash": self.previousHash,
             "Nonce": self.nonce,
-            "Transactions": self.transactions
+            "Transactions": [str(tx) for tx in self.transactions]
         }
 
-        return json.dumps(b, indent=4)
+        return json.dumps(block, indent=4)
