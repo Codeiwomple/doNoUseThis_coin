@@ -20,6 +20,21 @@ class Blockchain:
         self.difficulty = 2
         self.miningReward = 100
 
+    def __str__(self):
+        """Return blockchain in a human readable (json) string"""
+        jData = []
+
+        for b in self.blockchain:
+            block = {
+                "Timestamp": b.timestamp,
+                "Hash": b.hash,
+                "Previous hash": b.previousHash
+            }
+
+            jData.append(block)
+
+        return json.dumps(jData, indent=4)
+
     def _createGenesisBlock(self):
         """Create genesis/ first block on chain"""
 
@@ -83,21 +98,6 @@ class Blockchain:
                     logger.debug(f"Balance {balance}")
 
         return balance
-
-    def __str__(self):
-        """Return blockchain in a human readable (json) string"""
-        jData = []
-
-        for b in self.blockchain:
-            block = {
-                "Timestamp": b.timestamp,
-                "Hash": b.hash,
-                "Previous hash": b.previousHash
-            }
-
-            jData.append(block)
-
-        return json.dumps(jData, indent=4)
 
     def isValid(self):
         """Function to check all block in the chain for validity"""
