@@ -13,5 +13,5 @@ DEBUG
 NOTSET
 """
 
-logging.basicConfig(stream=sys.stderr, level=logging.INFO)
+logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
 logger = logging.getLogger('log')

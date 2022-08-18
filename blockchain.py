@@ -1,6 +1,5 @@
 import json
 import logging
-import difflib
 
 from setup_logger import logger
 from block import Block
@@ -15,12 +14,12 @@ class Blockchain:
     def __init__(self):
         """Create a chain containing a genesis block"""
         self.blockchain = [self._createGenesisBlock()]
-        self.difficulty = 4
+        self.difficulty = 2
 
     def _createGenesisBlock(self):
         """Create genesis/ first block on chain"""
 
-        self.genBlock = Block(0, "01/01/2017", "Genesis block", "0")
+        self.genBlock = Block("01/01/2017", "Genesis block", "0")
 
         logger.info("Genisis block created")
 
@@ -32,12 +31,12 @@ class Blockchain:
 
     def addBlock(self, newBlock):
         """Mine new block and push to the blockchain"""
-        print("Call mine")
         newBlock.previousHash = self.getLatestBlock().hash
         newBlock.mineBlock(self.difficulty)
 
         # Logging
-        logger.info(f"New block created: {newBlock.index} {newBlock.hash}")
+        logger.info(
+            f"New block created: {newBlock.timestamp} {newBlock.hash}")
         logger.debug(str(newBlock))
 
         self.blockchain.append(newBlock)
@@ -48,7 +47,7 @@ class Blockchain:
 
         for b in self.blockchain:
             block = {
-                "Index": b.index,
+                "Timestamp": b.timestamp,
                 "Hash": b.hash,
                 "Previous hash": b.previousHash
             }
@@ -64,10 +63,10 @@ class Blockchain:
             currBlock = self.blockchain[i]
             prevBlock = self.blockchain[i-1]
 
-            # Check block hashs matche recorded values
+            # Check block hashs match recorded values
             if(currBlock.hash != currBlock.calculateHash()):
                 logger.warning(
-                    f"currBlock {currBlock.index} hash's do not match!")
+                    f"Block {currBlock.index} hash's do not match!")
                 logger.warning(f"Recorded hash: {currBlock.hash}")
                 logger.warning(f"Actual hash: {currBlock.calculateHash()}")
 
@@ -75,7 +74,7 @@ class Blockchain:
 
             if(prevBlock.hash != prevBlock.calculateHash()):
                 logger.warning(
-                    f"prevBlock {prevBlock.index} hash's do not match!")
+                    f"Previous block {prevBlock.index} hash's do not match!")
                 logger.warning(f"Recorded hash: {prevBlock.hash}")
                 logger.warning(f"Actual hash: {prevBlock.calculateHash()}")
                 return False

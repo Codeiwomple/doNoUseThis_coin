@@ -30,7 +30,7 @@ def Main():
     }
 
     print("Add new block 1")
-    myCoin.addBlock(Block(1, "10/07/2017", data))
+    myCoin.addBlock(Block("10/07/2017", data))
 
     data = {
         "Transactions": [
@@ -46,14 +46,16 @@ def Main():
             }
         ]
     }
-    print("Add new block 1")
-    myCoin.addBlock(Block(2, "12/07/2017", data))
+    print("Add new block 2")
+    myCoin.addBlock(Block("12/07/2017", data))
 
     print(str(myCoin))
 
     print(f"The chain is valid {myCoin.isValid()}")
 
+    print("Change block 2 data")
     myCoin.blockchain[2].data = "Hello"
+
     print(f"The chain is valid {myCoin.isValid()}")
 
 
