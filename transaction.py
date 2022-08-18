@@ -1,5 +1,6 @@
 import json
 import logging
+import hashlib
 
 from setup_logger import logger
 from block import Block
@@ -26,3 +27,11 @@ class Transaction:
         }
 
         return json.dumps(tx, indent=4)
+
+    def calculateHash(self):
+        """Create a has of the transaction for use when signing"""
+
+        hashGen = hashlib.sha256()
+        hashGen.update(str(tx).encode())
+
+        return hashGen.hexdigest()
