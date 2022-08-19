@@ -40,20 +40,21 @@ class Transaction:
         return json.dumps(tx, indent=4)
 
     def calculateHash(self):
-        """Create a has of the transaction for use when signing"""
+        """Create a sha256 hash of the transaction for use when signing"""
         digest = hashes.Hash(hashes.SHA256())
         digest.update(bytes(str(self), 'utf-8'))
 
         return digest.finalize()
 
     def signTransaction(self, signingKey):
-        """Digitally sign transaction"""
+        """Digitally sign sha256 hash of transaction with ECDSA"""
 
         # Verify that the from address is the public signing key
         # i.e. the person sending is the person signing
         if signingKey.public_key().public_bytes(encoding=serialization.Encoding.PEM, format=serialization.PublicFormat.SubjectPublicKeyInfo) != self.fromAddr:
             raise Exception("You cannot sign transactions for other people")
 
+        # reate hash of the transaction
         txHash = self.calculateHash()
         logging.debug(f"{self.fromAddr.decode()} attmptng to sign {txHash}")
 
@@ -62,7 +63,11 @@ class Transaction:
         logging.debug(f"Signature created: {self.signature}")
 
     def isValid(self):
-        """Check if a transaction is valid"""
+        """
+        Check a single transaction is valid
+        Checking for signature presence, and validlity 
+        Key used for verification is the senders public key/ address
+        """
         logging.debug(f"Making sure transaction is valid")
 
         # Special case: mining reward

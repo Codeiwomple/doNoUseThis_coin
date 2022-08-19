@@ -21,7 +21,11 @@ class Blockchain:
         self.miningReward = 100
 
     def __str__(self):
-        """Return blockchain in a human readable (json) string"""
+        """
+        Return blockchain in a human readable (json) string
+        May come back and change this to a flat string and have a 
+        separate json method
+        """
         jData = []
 
         for b in self.blockchain:
@@ -50,9 +54,12 @@ class Blockchain:
         return self.blockchain[len(self.blockchain) - 1]
 
     def minePendingTransactions(self, miningRewardAddr):
-        """Mine a block with the list of pending transactions"""
-        # Note this block will include timestamp at start of mining
-        # Not block creation
+        """
+        Mine a block with the list of pending transactions
+        Note this block will include timestamp at start of mining
+        Not block creation
+        """
+
         newBlock = Block(str(datetime.datetime.now()),
                          self.pendingTransactions, self.getLatestBlock().hash)
         newBlock.mineBlock(self.difficulty)
@@ -109,7 +116,9 @@ class Blockchain:
         return balance
 
     def isValid(self):
-        """Function to check all block in the chain for validity"""
+        """
+        Function to check all blocks in the chain for valid hashes and transactions
+        """
 
         for i in range(1, len(self.blockchain)):
             currBlock = self.blockchain[i]
@@ -140,6 +149,6 @@ class Blockchain:
         return True
 
     def printPendingTransactions(self):
-
+        """Function to print the list of pending transactions for debugging"""
         for transaction in self.pendingTransactions:
             print(str(transaction))

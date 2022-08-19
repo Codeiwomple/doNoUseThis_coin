@@ -10,6 +10,10 @@ from blockchain import Blockchain
 from block import Block
 from transaction import Transaction
 
+"""
+File to test and use the blockchain functionality
+"""
+
 
 # Set logger to name of class
 logger = logging.getLogger('DoNotUseThis_coin')
@@ -129,7 +133,12 @@ def Main():
 
 
 def createTransaction(blockchain, fromAddr, toAddr, ammount, signingKey):
-    # Create a transaction
+    """
+    Function to create a transaction and add it to the chains 
+    pending Tx to be mined
+    """
+
+    # Declare a transaction
     print('\n' + "**DECLARE TRANSACTION**")
     tx = Transaction(fromAddr, toAddr, ammount)
 
@@ -143,6 +152,10 @@ def createTransaction(blockchain, fromAddr, toAddr, ammount, signingKey):
 
 
 def createUser():
+    """
+    Function to generate an address and private key to create transactions 
+    and test blockchain functionality
+    """
     # Create keys
     print("**CREATE CRYPTO KEYS**")
     private_key = ec.generate_private_key(ec.SECP256K1(), default_backend())

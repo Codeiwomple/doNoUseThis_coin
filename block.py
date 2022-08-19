@@ -13,7 +13,7 @@ class Block:
     def __init__(self, timestamp, transactions, previousHash=''):
         """Initialise instance of block"""
         self.timestamp = timestamp
-        self.transactions = transactions  # List of json transactions
+        self.transactions = transactions
         self.previousHash = previousHash
         self.nonce = 0
 
