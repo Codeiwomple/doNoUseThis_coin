@@ -57,7 +57,7 @@ class Block:
     def transactionsAreValid(self):
         """Check all transactions in block and validate"""
 
-        for tx in this.transactions:
+        for tx in self.transactions:
             if not tx.isValid():
                 return False
         return True

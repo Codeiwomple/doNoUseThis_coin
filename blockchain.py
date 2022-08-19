@@ -41,6 +41,7 @@ class Blockchain:
         self.genBlock = Block(str(datetime.datetime.now()), [], None)
 
         logger.info("Genisis block created")
+        logger.debug(str(self.genBlock))
 
         return self.genBlock
 
@@ -53,19 +54,18 @@ class Blockchain:
         # Note this block will include timestamp at start of mining
         # Not block creation
         newBlock = Block(str(datetime.datetime.now()),
-                         self.pendingTransactions)
+                         self.pendingTransactions, self.getLatestBlock().hash)
         newBlock.mineBlock(self.difficulty)
 
         self.blockchain.append(newBlock)
 
         logger.info("Block added to blockchain")
+        logger.debug(f"Clearing pending TX")
+        logger.debug(f"Adding mining reward for {miningRewardAddr}")
 
         # Send mining reward and empty pending transaction list
         self.pendingTransactions = [Transaction(
             None, miningRewardAddr, self.miningReward)]
-
-        logger.debug(f"Pending TX cleared")
-        logger.debug(f"Mining reward added for {miningRewardAddr}")
 
     def addTransaction(self, transaction):
         """Add a transaction to the pending transaction list"""

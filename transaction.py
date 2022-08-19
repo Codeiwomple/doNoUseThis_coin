@@ -18,10 +18,12 @@ class Transaction:
     """Class to represent a transaction"""
 
     def __init__(self, fromAddr, toAddr, ammount):
-        """"""
+        """Initialise transaction data"""
         self.fromAddr = fromAddr
         self.toAddr = toAddr
         self.ammount = ammount
+
+        logger.debug(f"Transaction declared: {self.calculateHash()}")
 
     def __str__(self):
         """Output transaction in human readable format"""
@@ -89,5 +91,6 @@ class Transaction:
         except:
             print("Somthing went wrong...")
 
-        logging.warning(f"Should not end up here transactions.py isValid()")
+        logging.warning(
+            f"There was an issue with transaction validation for {str(self)}")
         return False
